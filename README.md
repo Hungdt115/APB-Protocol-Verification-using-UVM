@@ -9,7 +9,6 @@ This repository contains a Universal Verification Methodology (UVM) based testbe
 ## Directory Structure
 
 *   `apb_top.sv`: The top-level SystemVerilog file that instantiates the Design Under Test (DUT) and the UVM testbench environment.
-*   `GEMINI.md`: Project context and guidelines for Gemini CLI interactions.
 *   `README.md`: This file, providing an overview of the project structure and execution.
 *   `image.png`: A diagram or image related to the project.
 *   `apb_uvm_repo/`: This directory contains the core UVM testbench environment, including agents, sequences, scoreboard, and the DUT itself. This is where the main UVM verification components reside.
