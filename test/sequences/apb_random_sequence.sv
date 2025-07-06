@@ -6,6 +6,8 @@
 class apb_random_sequence extends uvm_sequence#(apb_transaction);
   `uvm_object_utils(apb_random_sequence)
 
+  int num_transactions; // Number of transactions to generate
+
   //-- Sub-sequences to be randomized
   apb_write_read_sequence wrs;
   apb_burst_write_read_sequence bwrs;
@@ -22,19 +24,21 @@ class apb_random_sequence extends uvm_sequence#(apb_transaction);
 
   //-- Body: Randomly selects and executes one sub-sequence
   virtual task body();
-    `uvm_info(get_full_name(), "Starting random sequence...", UVM_LOW)
+    `uvm_info(get_full_name(), $sformatf("Starting random sequence for %0d transactions...", num_transactions), UVM_LOW)
 
-    //-- Create the sequence objects
-    wrs = apb_write_read_sequence::type_id::create("wrs");
-    bwrs = apb_burst_write_read_sequence::type_id::create("bwrs");
-    eas = apb_error_addr_sequence::type_id::create("eas");
+    for (int i = 0; i < num_transactions; i++) begin
+      //-- Create the sequence objects
+      wrs = apb_write_read_sequence::type_id::create("wrs");
+      bwrs = apb_burst_write_read_sequence::type_id::create("bwrs");
+      eas = apb_error_addr_sequence::type_id::create("eas");
 
-    //-- Randomly choose which sequence to run
-    randcase
-      1: wrs.start(m_sequencer);
-      1: bwrs.start(m_sequencer);
-      1: eas.start(m_sequencer);
-    endcase
+      //-- Randomly choose which sequence to run
+      randcase
+        1: wrs.start(m_sequencer);
+        1: bwrs.start(m_sequencer);
+        1: eas.start(m_sequencer);
+      endcase
+    end
 
     `uvm_info(get_full_name(), "Finished random sequence.", UVM_LOW)
   endtask

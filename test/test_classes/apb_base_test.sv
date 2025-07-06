@@ -13,6 +13,9 @@ class apb_base_test extends uvm_test;
   //-- The sequence that will be run by this test
   uvm_sequence #(apb_transaction) m_sequence;
 
+  //-- Number of transactions to generate
+  int num_transactions;
+
   //--------------------------------------------------------------------
   //-- Methods
   //--------------------------------------------------------------------
@@ -26,6 +29,12 @@ class apb_base_test extends uvm_test;
   function void build_phase (uvm_phase phase);
     super.build_phase(phase);
     env = apb_env::type_id::create("env", this);
+
+    // Get number of transactions from config_db
+    if (!uvm_config_db#(int)::get(this, "", "num_transactions", num_transactions)) begin
+      `uvm_info(get_full_name(), "num_transactions not set, using default of 10", UVM_LOW)
+      num_transactions = 10; // Default value
+    end
   endfunction
 
   //-- End of Elaboration Phase: prints the testbench topology

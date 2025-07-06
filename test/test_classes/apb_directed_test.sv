@@ -25,6 +25,7 @@ class apb_directed_test extends apb_base_test;
 
     //-- Create the main directed sequence
     directed_seq = apb_directed_sequence::type_id::create("directed_seq");
+    directed_seq.num_transactions = num_transactions;
 
     //-- Create the sub-sequences to be executed
     wrs = apb_write_read_sequence::type_id::create("wrs");
