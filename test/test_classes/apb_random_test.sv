@@ -22,6 +22,7 @@ class apb_random_test extends apb_base_test;
 
     //-- Create the main random sequence
     random_seq = apb_random_sequence::type_id::create("random_seq");
+    random_seq.num_transactions = num_transactions;
 
     //-- Assign the random sequence to the main sequence handle
     m_sequence = random_seq;

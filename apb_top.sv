@@ -71,9 +71,11 @@ module apb_top();
     //-- Set the virtual interface in the config database for the testbench
     uvm_config_db#(virtual apb_if)::set(null, "*", "vif", vif);
 
-    //-- Run the base test (this will be updated in later phases)
-    //-- Run the directed test. Change this string to run other tests.
-    run_test();
+    //-- Set the number of transactions for the test
+    uvm_config_db#(int)::set(null, "*", "num_transactions", 5); // Example: 20 transactions
+
+    //-- Run the desired UVM test
+    run_test(); // Or "apb_directed_test"
   end
 
   //--------------------------------------------------------------------
