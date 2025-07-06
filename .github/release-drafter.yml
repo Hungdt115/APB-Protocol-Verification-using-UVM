@@ -1,0 +1,17 @@
+name-template: "ver_{{version}}"
+tag-template: "ver_{{version}}"
+categories:
+  - title: "✨ Features"
+    labels:
+      - "feature"
+  - title: "🐛 Bug Fixes"
+    labels:
+      - "bug"
+  - title: "🛠 Refactoring"
+    labels:
+      - "refactor"
+change-template: "- $title (#$number) @$author"
+template: |
+  ## Changes
+
+  $CHANGES
