@@ -42,7 +42,8 @@ module apb_top();
     .PENABLE(vif.PENABLE),
     .PWDATA (vif.PWDATA),
     .PRDATA (vif.PRDATA),
-    .PREADY (vif.PREADY)
+    .PREADY (vif.PREADY),
+    .PSLVERR(vif.PSLVERR)
   );
 
   //--------------------------------------------------------------------

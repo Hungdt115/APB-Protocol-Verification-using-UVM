@@ -4,15 +4,14 @@
 
 This repository contains a Universal Verification Methodology (UVM) based testbench for verifying an Advanced Peripheral Bus (APB) slave device. It is structured to facilitate the development, simulation, and analysis of the APB slave design.
 
-![Block Diagram](image.png)
+![Block Diagram](doc/overview.png)
 
 ## Directory Structure
 
 *   `apb_top.sv`: The top-level SystemVerilog file that instantiates the Design Under Test (DUT) and the UVM testbench environment.
 *   `README.md`: This file, providing an overview of the project structure and execution.
 *   `image.png`: A diagram or image related to the project.
-*   `apb_uvm_repo/`: This directory contains the core UVM testbench environment, including agents, sequences, scoreboard, and the DUT itself. This is where the main UVM verification components reside.
-*   `env/`: (Likely a duplicate or older version of `apb_uvm_repo/env`) Contains UVM environment components.
+*   `env/`: Contains UVM environment components.
 *   `log/`: Stores simulation logs and output files.
 *   `rep/`: Intended for reports (e.g., coverage reports).
 *   `script/`: Contains utility scripts, such as the UVM log parser.
@@ -22,19 +21,18 @@ This repository contains a Universal Verification Methodology (UVM) based testbe
 
 ## Key Components
 
-The primary UVM testbench components and DUT are located within the `apb_uvm_repo/` subdirectory. This includes:
-*   **DUT:** `apb_uvm_repo/src/apb_dut.v`
-*   **UVM Environment:** `apb_uvm_repo/env/apb_env.sv`
-*   **Base Test:** `apb_uvm_repo/test/test_classes/apb_base_test.sv`
-*   **Simulation Entry Point:** `apb_uvm_repo/apb_top.sv`
+*   **DUT:** `src/apb_dut.v`
+*   **UVM Environment:** `env/apb_env.sv`
+*   **Base Test:** `test/test_classes/apb_base_test.sv`
+*   **Simulation Entry Point:** `apb_top.sv`
 
 ## How to Run Simulations
 
-To execute simulations, you typically need to navigate into the `apb_uvm_repo/sim/` directory and use the provided batch scripts.
+To execute simulations, you typically need to navigate into the `sim/` directory and use the provided batch scripts.
 
 1.  **Navigate to the simulation directory:**
     ```bash
-    cd apb_uvm_repo/sim
+    cd sim
     ```
 2.  **Run a specific test (e.g., `apb_directed_test`):**
     ```bash
@@ -49,7 +47,28 @@ To execute simulations, you typically need to navigate into the `apb_uvm_repo/si
     clean.bat
     ```
 
-For more detailed instructions on running specific tests or understanding the UVM environment, please refer to the `README.md` located inside the `apb_uvm_repo/` directory.
+## Getting Started
+
+To get started with this APB UVM environment, follow these steps:
+
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository_url>
+    cd 07_APB-Protocol-Verification-using-UVM
+    ```
+
+2.  **Ensure SystemVerilog/UVM simulator is installed:**
+    This project requires a SystemVerilog simulator with UVM support (e.g., QuestaSim, VCS, Xcelium, Vivado XSim).
+
+3.  **Run a simulation:**
+    Navigate to the `sim` directory and execute one of the provided batch scripts. For example, to run the `apb_random_test`:
+    ```bash
+    cd sim
+    sim_go.bat apb_dut apb_top apb_random_test
+    ```
+
+4.  **View logs and waveforms:**
+    Simulation logs will be generated in the `log/` directory. Waveforms (if enabled in `apb_top.sv`) will be generated as `waveform.vcd` in the project root.
 
 ## References
 
