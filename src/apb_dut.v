@@ -13,7 +13,7 @@ module apb_dut (
   input  bit         PWRITE,
   input  bit  [31:0] PWDATA,
   input  bit         PCLK,
-  input  bit         PRESET, 
+  input  bit         PRESETn, 
 
   output reg  [31:0] PRDATA,
   output reg         PREADY,
@@ -33,7 +33,7 @@ module apb_dut (
   //-- State Register Logic
   //--------------------------------------------------------------------
   always @(posedge PCLK) begin
-    if (PRESET) begin
+    if (PRESETn) begin
       ps <= IDLE;
     end else begin
       ps <= ns;

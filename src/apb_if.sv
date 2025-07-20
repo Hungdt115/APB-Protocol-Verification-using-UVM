@@ -11,7 +11,7 @@ interface apb_if();
   // Clock and Reset Signals
   //--------------------------------------------------------------------
   bit PCLK;
-  bit PRESET;
+  bit PRESETn;
 
 
   //--------------------------------------------------------------------
@@ -54,7 +54,7 @@ interface apb_if();
     input PREADY,
     input PSLVERR,
     input PCLK,
-    input PRESET
+    input PRESETn
   );
 
 
@@ -69,7 +69,7 @@ interface apb_if();
     input PENABLE,
     input PSTRB,
     input PCLK,
-    input PRESET,
+    input PRESETn,
 
     output PRDATA,
     output PREADY,
@@ -91,7 +91,7 @@ interface apb_if();
     input PREADY,
     input PSLVERR,
     input PCLK,
-    input PRESET
+    input PRESETn
   );
 
 endinterface : apb_if
