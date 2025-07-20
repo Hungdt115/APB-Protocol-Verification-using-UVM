@@ -20,5 +20,11 @@ class apb_transaction extends uvm_sequence_item;
   function new(string name = "apb_transaction");
     super.new(name);
   endfunction 
+
+  //convert2string
+  function string convert2string();
+    return $sformatf("PADDR=%0h, PWDATA=%0h, PWRITE=%0b, PENABLE=%0b, PSEL=%0b, PRESET=%0b, PSTRB=%0b, PRDATA=%0h, PSLVERR=%0b, PREADY=%0b",
+                     PADDR, PWDATA, PWRITE, PENABLE, PSEL, PRESET, PSTRB, PRDATA, PSLVERR, PREADY);
+  endfunction
  
 endclass

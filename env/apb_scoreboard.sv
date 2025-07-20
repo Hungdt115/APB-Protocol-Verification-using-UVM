@@ -51,11 +51,11 @@ class apb_scoreboard extends uvm_scoreboard;
       write_fifo.get(write_t);
       //-- Check if a write to this address is already pending
       if (pending_writes.exists(write_t.PADDR)) begin
-        `uvm_warning("SCOREBOARD", $sformatf("Overwriting pending write at address 0x%0h without a read", write_t.PADDR))
+        `uvm_warning(get_type_name(), $sformatf("Overwriting pending write at address 0x%0h without a read", write_t.PADDR))
       end
       //-- Store the write data, keyed by its address
       pending_writes[write_t.PADDR] = write_t.PWDATA;
-      `uvm_info("SCOREBOARD", $sformatf("Logged write to Addr: 0x%0h, Data: 0x%0h", write_t.PADDR, write_t.PWDATA), UVM_HIGH)
+      `uvm_info(get_type_name(), $sformatf("Logged write to Addr: 0x%0h, Data: 0x%0h", write_t.PADDR, write_t.PWDATA), UVM_HIGH)
     end
   endtask
 
@@ -88,16 +88,16 @@ class apb_scoreboard extends uvm_scoreboard;
     super.report_phase(phase);
     //-- Check for any remaining entries in the pending writes queue
     if (pending_writes.num() > 0) begin
-      `uvm_error("SCOREBOARD", $sformatf("Found %0d writes that were never read back!", pending_writes.num()))
+      `uvm_error(get_type_name(), $sformatf("Found %0d writes that were never read back!", pending_writes.num()))
       foreach (pending_writes[addr]) begin
-        `uvm_info("SCOREBOARD", $sformatf("  - Unchecked write to Addr: 0x%0h, Data: 0x%0h", addr, pending_writes[addr]), UVM_LOW)
+      `uvm_info(get_type_name(), $sformatf("  - Unchecked write to Addr: 0x%0h, Data: 0x%0h", addr, pending_writes[addr]), UVM_LOW)
       end
     end
 
-    `uvm_info(get_type_name(), "---------------------------------------", UVM_NONE)
-    `uvm_info(get_type_name(), $sformatf("----       TEST PASS COUNTS: %0d     ----", compare_pass), UVM_NONE)
-    `uvm_info(get_type_name(), $sformatf("----       TEST FAIL COUNTS: %0d     ----", compare_fail + pending_writes.num()), UVM_NONE)
-    `uvm_info(get_type_name(), "---------------------------------------", UVM_NONE)
+    `uvm_info(get_type_name(),           "-----------------------------------------", UVM_NONE)
+    `uvm_info(get_type_name(), $sformatf("----       TEST PASS COUNTS: %3d     ----", compare_pass), UVM_NONE)
+    `uvm_info(get_type_name(), $sformatf("----       TEST FAIL COUNTS: %3d     ----", compare_fail + pending_writes.num()), UVM_NONE)
+    `uvm_info(get_type_name(),           "-----------------------------------------", UVM_NONE)
   endfunction
 
 endclass
