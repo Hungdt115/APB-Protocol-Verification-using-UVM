@@ -21,6 +21,9 @@ class apb_directed_test extends apb_base_test;
     apb_write_read_sequence wrs;
     apb_burst_write_read_sequence bwrs;
 
+    //-- Set the number of transactions for the test
+    uvm_config_db#(int)::set(null, "*", "num_transactions", 20); // Example: 20 transactions
+    
     super.build_phase(phase);
 
     //-- Create the main directed sequence
