@@ -1,11 +1,11 @@
 #!/bin/csh
 
-set TOP = "$1"
-set TB_TOP = "$2"
+set DUT_TOP      = "$1"
+set TB_TOP   = "$2"
 set TESTNAME = "$3"
 
 # =========================================================================
-# == Vivado Simulator (xvlog/xelab/xsim)
+# ==                   Vivado Simulator (xvlog/xelab/xsim)                ==
 # =========================================================================
 
 # Make sure to source the Vivado settings script first
@@ -18,73 +18,73 @@ mkdir -p "$PROJECT_ROOT/rep"
 
 echo ""
 echo "********************************************************"
-echo "*         APB Protocol Verification - Vivado Sim         *"
-echo "* Top module:   %-35s *" "$TOP"
-echo "* Test pattern: %-35s *" "$TESTNAME"
+printf "APB Protocol Verification - Vivado Sim\n"
+printf "Top module:   %-35s \n" "$DUT_TOP"
+printf "Test pattern: %-35s \n" "$TESTNAME"
 echo "********************************************************"
 echo ""
 
-set frame = '--------------------------------------------------'
 
-echo $frame
-echo '---------         Compile source     -------------'
-echo $frame
+echo "--------------------------------------------------"
+echo "----             Compile source               ----"
+echo "--------------------------------------------------"
 
-xvlog -sv -i ../src ../src/$TOP.v --log ../log/xvlog_$TOP.log
+xvlog -sv -i ../src ../src/$DUT_TOP.sv --log ../log/xvlog_$DUT_TOP.log
 
 if ($status != 0) then
   echo ""
-  echo '------------ ##### Compile error ##### -------------'
+  echo "##### Compile error   #####"
   exit 1
 endif
 
-echo $frame
-echo '----         Compile UVM testbench       ---------'
-echo $frame
+echo "--------------------------------------------------"
+echo "----          Compile UVM testbench           ----"
+echo "--------------------------------------------------"
 
 xvlog -sv -i ../env -i ../src -i ../test ../top.sv -L uvm --log ../log/xvlog_$TB_TOP.log
 
 if ($status != 0) then
   echo ""
-  echo '------ ##### Compile testbench error ##### -------'
+  echo "##### Compile testbench error   #####"
   echo ""
   exit 1
 endif
 
-echo $frame
-echo '--------         Elaborate source     ------------'
-echo $frame
+echo "--------------------------------------------------"
+echo "----             Elaborate source             ----"
+echo "--------------------------------------------------"
 
-xelab -debug typical -cc_type bcesfxt $TB_TOP -L uvm --log ../log/xelab_$TOP.log
+xelab -debug typical -cc_type bcesfxt $TB_TOP -L uvm --log ../log/xelab_$DUT_TOP.log
 
 if ($status != 0) then
   echo ""
-  echo '----------- ##### Elaborate error ##### ------------'
+  echo "##### Elaborate error   #####"
   exit 1
 endif
 
-echo $frame
-echo '--------         Simulation start     ------------'
-echo $frame
 
-xsim $TB_TOP -R --log "$PROJECT_ROOT/log/xsim_$TOP.log" --testplusarg "UVM_TESTNAME=$TESTNAME"
+echo "--------------------------------------------------"
+echo "----              Simulation start            ----"
+echo "--------------------------------------------------"
+
+xsim $TB_TOP -R --log "$PROJECT_ROOT/log/xsim_$DUT_TOP.log" --testplusarg "UVM_TESTNAME=$TESTNAME"
 
 if ($status != 0) then
   echo ""
-  echo '----------- ##### Simulation error ##### -----------'
-  echo "Check log: $PROJECT_ROOT/log/xsim_$TOP.log"
+  echo "##### Simulation error   #####"
+  echo "Check log: $PROJECT_ROOT/log/xsim_$DUT_TOP.log"
   exit 1
 endif
 
-# echo $frame
-# echo '# -----         Code coverage report     ----------'
-# echo $frame
+echo "--------------------------------------------------"
+echo "----            Code coverage report          ----"
+echo "--------------------------------------------------"
 
-# xcrg -cc_report ../rep -cc_db work.$TB_TOP -cc_dir ./xsim.codeCov/ -report_format html --log ../log/xcrg_$TB_TOP.log
+xcrg -cc_report ../rep -cc_db work.$TB_TOP -cc_dir ./xsim.codeCov/ -report_format html --log ../log/xcrg_$TB_TOP.log
 
-# if ($status != 0) then
-#   echo ""
-#   echo '# --------- ##### Code coverage error ##### ---------'
-#   echo ""
-#   exit 1
-# endif
+if ($status != 0) then
+  echo ""
+  echo "##### Code coverage error   #####"
+  echo ""
+  exit 1
+

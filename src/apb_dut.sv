@@ -7,17 +7,20 @@
 //--  The module responds to APB signals and manages the PREADY signal.
 //--------------------------------------------------------------------
 module apb_dut (
-  input  bit         PSEL,
-  input  bit         PENABLE,
-  input  bit  [31:0] PADDR,
-  input  bit         PWRITE,
-  input  bit  [31:0] PWDATA,
-  input  bit         PCLK,
-  input  bit         PRESETn, 
-
-  output reg  [31:0] PRDATA,
-  output reg         PREADY,
-  output reg         PSLVERR
+  //--------------------------------------------------------------------------
+  // APB Interface Ports
+  //--------------------------------------------------------------------------
+  input  logic        PCLK,     // APB clock
+  input  logic        PRESETn,  // APB active-low reset
+  input  logic        PSEL,     // APB select
+  input  logic        PENABLE,  // APB enable
+  input  logic        PWRITE,   // APB write/read control
+  input  logic [31:0] PADDR,    // APB address
+  input  logic [31:0] PWDATA,   // APB write data
+  input  logic [ 3:0] PSTRB,    // APB byte write strobe
+  output logic        PREADY,   // APB ready signal
+  output logic [31:0] PRDATA,   // APB read data
+  output logic        PSLVERR   // APB slave error
 );
 
   //-- APB State Parameters
@@ -46,7 +49,7 @@ module apb_dut (
   always @(*) begin
     // Default values
     ns      = ps;
-    PREADY  = 1'b0; // Default PREADY to low
+    PREADY  = 1'b1; // Default PREADY to low
     PSLVERR = 1'b0; // Default PSLVERR to low
 
     case (ps)
