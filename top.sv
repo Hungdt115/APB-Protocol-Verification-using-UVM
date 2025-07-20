@@ -21,13 +21,13 @@ import uvm_pkg::*;
 
 
 //--------------------------------------------------------------------
-//-- Module: apb_top
+//-- Module: top_test
 //-- Description: 
 //--  Top-level module for the APB UVM testbench.
 //--  his module instantiates the DUT, the APB interface,
 //--  and starts the UVM test.
 //--------------------------------------------------------------------
-module apb_top();
+module top_test();
 
   //-- APB Interface Instance  
   apb_if vif();
